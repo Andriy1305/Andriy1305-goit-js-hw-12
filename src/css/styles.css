@@ -1,18 +1,210 @@
-/**
-  |============================
-  | include css partials with
-  | default @import url()
-  |============================
-*/
-/* Common styles */
-@import url('./reset.css');
-@import url('./base.css');
-@import url('./container.css');
-@import url('./animations.css');
 
-/* Sections style */
-@import url('./header.css');
-@import url('./vite-promo.css');
-@import url('./badges.css');
-@import url('./back-link.css');
-@import url('./footer.css');
+@import 'izitoast/dist/css/iziToast.min.css';
+@import 'simplelightbox/dist/simple-lightbox.min.css';
+
+* {
+  font-family: 'Montserrat', sans-serif;
+  box-sizing: border-box;
+}
+.loader {
+  transform: translate(-50%, 0%);
+  top: 108px;
+  left: 50%;
+  z-index: 999;
+  position: absolute;
+  width: 85px;
+  height: 50px;
+  background-repeat: no-repeat;
+  background-image: linear-gradient(#000 50px, transparent 0),
+    linear-gradient(#000 50px, transparent 0),
+    linear-gradient(#000 50px, transparent 0),
+    linear-gradient(#000 50px, transparent 0),
+    linear-gradient(#000 50px, transparent 0),
+    linear-gradient(#000 50px, transparent 0);
+  background-position: 0px center, 15px center, 30px center, 45px center,
+    60px center, 75px center, 90px center;
+  animation: rikSpikeRoll 0.65s linear infinite alternate;
+}
+@keyframes rikSpikeRoll {
+  0% {
+    background-size: 10px 3px;
+  }
+  16% {
+    background-size: 10px 50px, 10px 3px, 10px 3px, 10px 3px, 10px 3px, 10px 3px;
+  }
+  33% {
+    background-size: 10px 30px, 10px 50px, 10px 3px, 10px 3px, 10px 3px,
+      10px 3px;
+  }
+  50% {
+    background-size: 10px 10px, 10px 30px, 10px 50px, 10px 3px, 10px 3px,
+      10px 3px;
+  }
+  66% {
+    background-size: 10px 3px, 10px 10px, 10px 30px, 10px 50px, 10px 3px,
+      10px 3px;
+  }
+  83% {
+    background-size: 10px 3px, 10px 3px, 10px 10px, 10px 30px, 10px 50px,
+      10px 3px;
+  }
+  100% {
+    background-size: 10px 3px, 10px 3px, 10px 3px, 10px 10px, 10px 30px,
+      10px 50px;
+  }
+}
+.loader-off {
+  display: none;
+}
+.form-container {
+  margin: auto;
+  width: 1440px;
+}
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 36px;
+  padding-bottom: 36px;
+}
+.search-input {
+  outline: transparent;
+  border: 1px solid #808080;
+  border-radius: 4px;
+  width: 272px;
+  height: 40px;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  color: #2e2f42;
+  margin-right: 8px;
+  transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.search-input:hover {
+  border-color: #000;
+}
+.search-input:active,
+.search-input:focus {
+  border-color: #4e75ff;
+  outline: transparent;
+}
+.search-btn {
+  border-radius: 8px;
+  padding: 8px 16px;
+  width: 91px;
+  height: 40px;
+  background-color: #4e75ff;
+  border: none;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #fff;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.search-btn:hover,
+.search-btn:focus {
+  background-color: #6c8cff;
+  outline: none;
+}
+.gallery {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+}
+.gallery-item {
+  position: relative;
+  width: 360px;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #808080;
+}
+.gallery-info-list {
+  bottom: 0px;
+  width: 360px;
+  height: 48px;
+  position: absolute;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: #fff;
+  color: #2e2f42;
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    height 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+h3 {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.33;
+  letter-spacing: 0.04em;
+  transition: font-weight 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+p {
+  font-size: 12px;
+  line-height: 2;
+  letter-spacing: 0.04em;
+  text-align: center;
+  transition: font-weight 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.gallery-info-list:hover {
+  height: 200px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.gallery-info-list:hover p {
+  font-weight: 600;
+}
+.gallery-info-list:hover h3 {
+  font-weight: 900;
+}
+.gallery-link:hover + .gallery-info-list {
+  transform: translateY(48px);
+  background-color: rgba(255, 255, 255, 0);
+}
+.iziToast {
+  max-width: 432px;
+  border-radius: 4px;
+  padding: 20px;
+}
+.iziToast-texts {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 322px;
+  height: 48px !important;
+  margin: 0 !important;
+  margin-right: 24px !important;
+}
+.iziToast-message {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 16px !important;
+  line-height: 1.5;
+  letter-spacing: 0.03em;
+  color: #fafafb;
+  margin: 0 !important;
+}
+.iziToast-icon {
+  margin-right: 12px;
+}
+
+.load-more-btn {
+  display: block;
+  width: 200px;
+  margin: 20px auto;
+  padding: 10px;
+  background-color: #3b5998;
+  color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.load-more-btn:hover {
+  background-color: #2d4373;
+}
