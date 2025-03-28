@@ -14,6 +14,9 @@ const formSubmit = async (event) => {
   loader.style.display = 'block';
 
   searchQuery = event.currentTarget.elements.query.value.trim();
+  currentPage = 1; // Скидаємо сторінку до першої при новому запиті
+  loadMoreBtn.style.display = 'none'; // Ховаємо кнопку перед новим пошуком
+
   if (searchQuery === '') {
     loader.style.display = 'none';
     iziToast.error({
@@ -29,7 +32,10 @@ const formSubmit = async (event) => {
 
   try {
     const data = await fetchPhotos(searchQuery, currentPage);
-    if (data.totalHits === 0) {
+    
+    clearGallery(); // Очищаємо галерею перед новими результатами
+
+    if (data.hits.length === 0) {
       iziToast.error({
         message: 'Sorry, no images match your query.',
         messageColor: '#fafafb',
@@ -41,13 +47,10 @@ const formSubmit = async (event) => {
       return;
     }
 
-    clearGallery(); // Очищаємо галерею
     renderGallery(data.hits); // Відображаємо нові зображення
 
     if (data.totalHits > currentPage * 15) {
-      loadMoreBtn.style.display = 'block'; // Показуємо кнопку "Load More"
-    } else {
-      loadMoreBtn.style.display = 'none'; // Сховуємо кнопку, якщо немає більше зображень
+      loadMoreBtn.style.display = 'block'; // Показуємо кнопку, якщо є ще зображення
     }
   } catch (error) {
     iziToast.error({
@@ -69,13 +72,29 @@ const loadMoreImages = async () => {
   currentPage += 1;
   const loader = document.querySelector('.loader-container');
   loader.style.display = 'block';
+  loadMoreBtn.style.display = 'none'; // Ховаємо кнопку перед завантаженням
 
   try {
     const data = await fetchPhotos(searchQuery, currentPage);
+
+    if (data.hits.length === 0) {
+      clearGallery(); // Очищаємо галерею, якщо немає результатів
+      iziToast.info({
+        message: "We're sorry, but you've reached the end of search results.",
+        messageColor: '#fafafb',
+        icon: 'far fa-file-image',
+        position: 'topRight',
+        backgroundColor: '#ef4040',
+        color: '#fafafb',
+      });
+      return;
+    }
+
     renderGallery(data.hits);
 
-    if (data.totalHits <= currentPage * 15) {
-      loadMoreBtn.style.display = 'none'; // Сховуємо кнопку, якщо більше немає результатів
+    if (data.totalHits > currentPage * 15) {
+      loadMoreBtn.style.display = 'block'; // Показуємо кнопку, якщо ще є зображення
+    } else {
       iziToast.info({
         message: "We're sorry, but you've reached the end of search results.",
         messageColor: '#fafafb',
